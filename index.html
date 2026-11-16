@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4F46E5">
+<meta name="description" content="רוסית בכיס — קורס רוסית חינמי לדוברי עברית. 65 יחידות מ-A0 עד C1, עם אוצר מילים, דקדוק, קריאה וחזרה חכמה. עובד גם בלי אינטרנט.">
+<title>רוסית בכיס — קורס רוסית חינמי בעברית</title>
+<link rel="icon" href="docs/icon.png" type="image/png">
+<style>
+  :root{
+    --bg:#F4F5FB; --card:#fff; --text:#1E1B4B; --muted:#6B7280; --line:#E6E8F2;
+    --brand:#4F46E5; --brand2:#DB2777; --ok:#10B981; --shadow:0 8px 28px rgba(30,27,75,.08);
+    --font:"Segoe UI",Roboto,"Noto Sans Hebrew","IBM Plex Sans Hebrew","Rubik",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+  img{max-width:100%;height:auto;display:block}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  header.hero{
+    background:linear-gradient(135deg,var(--brand) 0%,#7C3AED 55%,var(--brand2) 100%);
+    color:#fff;padding:36px 0 72px;border-radius:0 0 36px 36px;
+  }
+  .brand{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+  .brand img{width:64px;height:64px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.18);background:#fff}
+  .brand h1{margin:0;font-size:28px;line-height:1.2}
+  .brand p{margin:2px 0 0;opacity:.9;font-size:15px}
+  .hero h2{font-size:clamp(26px,4vw,40px);line-height:1.25;margin:0 0 12px;max-width:16em}
+  .hero .lead{font-size:18px;opacity:.95;max-width:34em;margin:0 0 28px}
+  .cta{display:flex;flex-wrap:wrap;gap:12px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border-radius:999px;padding:14px 26px;font-weight:800;font-size:17px;
+    border:0;cursor:pointer;text-decoration:none !important;
+  }
+  .btn-dl{background:#fff;color:var(--brand);box-shadow:0 8px 24px rgba(0,0,0,.18);font-size:19px;padding:16px 32px}
+  .btn-dl:hover{transform:translateY(-1px)}
+  .btn-web{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.35)}
+  .btn-web:hover{background:rgba(255,255,255,.24)}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:-42px 0 40px;position:relative}
+  .stat{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:18px 14px;text-align:center}
+  .stat b{display:block;font-size:26px;color:var(--brand);line-height:1.1}
+  .stat span{color:var(--muted);font-size:13px;font-weight:600}
+
+  h3.sec{font-size:24px;margin:8px 0 16px}
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:48px}
+  .feat{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:18px 18px 16px}
+  .feat .ic{font-size:26px;margin-bottom:6px}
+  .feat b{display:block;font-size:16px;margin-bottom:4px}
+  .feat p{margin:0;color:var(--muted);font-size:14px}
+
+  .shots{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
+  .shots figure{margin:0}
+  .phone{
+    background:#0E0F1F;border-radius:28px;padding:10px;box-shadow:var(--shadow);
+  }
+  .phone img{border-radius:20px;width:100%;background:#F4F5FB}
+  .shots figcaption{text-align:center;color:var(--muted);font-size:13px;font-weight:600;margin-top:8px}
+
+  .panel{background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:24px 26px;margin-bottom:24px}
+  .panel ol,.panel ul{margin:8px 0 0;padding:0 22px 0 0}
+  .panel li{margin:8px 0}
+  .panel .note{background:#FEF3C7;border-radius:14px;padding:12px 14px;margin-top:16px;color:#78350F}
+  .warn{background:#FEF3C7;color:#78350F;border-radius:16px;padding:14px 16px;margin:0 0 16px}
+  .ai{color:var(--muted);font-size:14px;margin:0}
+
+  footer{padding:28px 0 40px;color:var(--muted);font-size:14px;text-align:center}
+  footer a{color:inherit}
+
+  @media (max-width:900px){
+    .stats,.features{grid-template-columns:repeat(2,1fr)}
+    .shots{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:560px){
+    header.hero{padding:24px 0 64px}
+    .brand img{width:52px;height:52px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .features,.shots{grid-template-columns:1fr 1fr}
+    .btn{width:100%}
+  }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="brand">
+        <img src="docs/icon.png" width="64" height="64" alt="סמל האפליקציה רוסית בכיס">
+        <div>
+          <h1>רוסית בכיס</h1>
+          <p>קורס רוסית חינמי לדוברי עברית</p>
+        </div>
+      </div>
+      <h2>למדו רוסית בעברית, גם בלי אינטרנט.</h2>
+      <p class="lead">65 יחידות מרמת A0 עד C1: אלפבית, אוצר מילים, דקדוק, קריאה וחזרה חכמה. בלי הרשמה ובלי פרסומות.</p>
+      <div class="cta">
+        <a class="btn btn-dl" href="download/russian-pocket.apk" download="russian-pocket.apk">הורדת האפליקציה לאנדרואיד</a>
+        <a class="btn btn-web" href="app/">לנסות בדפדפן</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="stats">
+      <div class="stat"><b>65</b><span>יחידות</span></div>
+      <div class="stat"><b>1,039</b><span>מילים</span></div>
+      <div class="stat"><b>25</b><span>שיעורי דקדוק</span></div>
+      <div class="stat"><b>A0–C1</b><span>ממתחילים עד מתקדמים</span></div>
+    </div>
+
+    <h3 class="sec">צילומי מסך</h3>
+    <div class="shots">
+      <figure>
+        <div class="phone"><img src="docs/screenshot-home.png" alt="מסך הבית של האפליקציה, עם היעד היומי ורשימת היחידות"></div>
+        <figcaption>מסך הבית</figcaption>
+      </figure>
+      <figure>
+        <div class="phone"><img src="docs/screenshot-word.png" alt="כרטיס לימוד מילה חדשה: фру́кты, פירות"></div>
+        <figcaption>מילה חדשה</figcaption>
+      </figure>
+      <figure>
+        <div class="phone"><img src="docs/screenshot-type.png" alt="תרגול הקלדה בלוח מקשים קירילי"></div>
+        <figcaption>הקלדה בקירילית</figcaption>
+      </figure>
+      <figure>
+        <div class="phone"><img src="docs/screenshot-reading.png" alt="דיאלוג קריאה בבית קפה, עם תרגום לעברית"></div>
+        <figcaption>דיאלוג קריאה</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="sec">מה יש בפנים</h3>
+    <div class="features">
+      <div class="feat"><div class="ic">📚</div><b>קורס מלא</b><p>65 יחידות מ-A0 עד C1: אלפבית, אוצר מילים, דקדוק וקריאה.</p></div>
+      <div class="feat"><div class="ic">🔤</div><b>1,039 מילים</b><p>עם סימון הטעמה ותעתיק לטיני, ועם הקראה בקול רוסי.</p></div>
+      <div class="feat"><div class="ic">✏️</div><b>25 שיעורי דקדוק</b><p>הסברים בעברית, דוגמאות ותרגול אחרי כל נושא.</p></div>
+      <div class="feat"><div class="ic">📖</div><b>קריאה</b><p>דיאלוגים וטקסטים ספרותיים, עם שאלות הבנה.</p></div>
+      <div class="feat"><div class="ic">🧠</div><b>חזרה חכמה</b><p>מערכת SRS (SM-2) שחוזרת על מה ששכחת בזמן הנכון.</p></div>
+      <div class="feat"><div class="ic">🎯</div><b>תרגול מגוון</b><p>רב-ברירה, האזנה, הקלדה, התאמה, בניית משפטים וכרטיסיות.</p></div>
+      <div class="feat"><div class="ic">👥</div><b>כמה פרופילים</b><p>אפשר ללמוד כמה אנשים על אותו טלפון, כל אחד עם ההתקדמות שלו.</p></div>
+      <div class="feat"><div class="ic">📴</div><b>עובד בלי אינטרנט</b><p>כל הקורס במכשיר. אחרי ההתקנה אפשר ללמוד גם בטיסה.</p></div>
+      <div class="feat"><div class="ic">🔒</div><b>בלי מעקב</b><p>ההתקדמות נשמרת אצלכם במכשיר. אין שרת ואין פרסומות.</p></div>
+    </div>
+
+    <div class="panel" id="install">
+      <h3 class="sec" style="margin-top:0">איך מתקינים בטלפון</h3>
+      <ol>
+        <li>מורידים את <a href="download/russian-pocket.apk" download="russian-pocket.apk">קובץ ה-APK</a>, שומרים אותו בטלפון, ופותחים אותו מתוך וואטסאפ (אחרי ששולחים אותו לעצמכם) או מתוך <b>הקבצים שלי ← הורדות</b>. <b>לא לפתוח מתוך תצוגה מקדימה</b> בתוך אפליקציה.</li>
+        <li>בטלפוני Samsung: מכבים זמנית את <b>Auto Blocker</b> (הגדרות ← אבטחה ובטיחות ← Auto Blocker).</li>
+        <li>אם Google Play Protect מציע לסרוק את האפליקציה, בוחרים <b>התקנה בלי סריקה</b>.</li>
+        <li>אם תופיע בקשה לאשר התקנה ממקור לא ידוע, מאשרים.</li>
+        <li>אחרי ההתקנה אפשר להפעיל מחדש את Auto Blocker.</li>
+      </ol>
+      <p class="note"><b>קול רוסי:</b> כדי שהאפליקציה תקריא מילים ומשפטים, צריך קול רוסי במנוע ההקראה (Text-to-Speech) של הטלפון. אם הוא חסר, האפליקציה תדריך אותך איך להתקין אותו. בדפדפן משתמשים ב-Web Speech API, וגם שם צריך קול רוסי במערכת.</p>
+    </div>
+
+    <p class="warn">התוכן עדיין לא עבר ביקורת של דובר רוסית יליד. ייתכנו אי-דיוקים בהגייה, בניסוח או בדקדוק.</p>
+    <p class="ai">🤖 הפרויקט נבנה בעזרת בינה מלאכותית. הקוד פתוח ב-<a href="https://github.com/igalyuze23/russian-pocket">GitHub</a> תחת רישיון MIT.</p>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      © 2026 יגאל יוזפוביץ׳ · <a href="https://github.com/igalyuze23/russian-pocket">הקוד ב-GitHub</a> · רישיון MIT
+    </div>
+  </footer>
+</body>
+</html>

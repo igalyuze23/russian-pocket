@@ -1,0 +1,37 @@
+# dependencies / tooling
+node_modules/
+package-lock.json
+__pycache__/
+*.pyc
+.venv/
+
+# test artifacts
+test-results/
+playwright-report/
+*.log
+/tmp/
+
+# secrets / signing — never commit a keystore or passwords
+*.keystore
+*.jks
+*.p12
+*.key
+.env
+.env.*
+
+# Android build outputs (keep only the published APK in download/)
+android/build/
+*.apk
+!download/*.apk
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# archives
+*.zip
+*.bundle
