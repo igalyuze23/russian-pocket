@@ -16,7 +16,7 @@ SCREENS.settings = function () {
     '<div class="sec-title">נתונים</div><div class="card"><div class="setrow"><div class="l"><b>גיבוי</b><small>העתקה או שחזור של כל הפרופילים כטקסט</small></div><button class="btn small sec" data-act="backup">💾 גיבוי</button></div>' +
     '<div class="setrow"><div class="l"><b>החלפת פרופיל</b></div><button class="btn small sec" data-act="switch">👥</button></div>' +
     '<div class="setrow"><div class="l"><b style="color:var(--bad)">מחיקת הפרופיל</b><small>מוחק את כל ההתקדמות של ' + esc(p.name) + '</small></div><button class="btn small bad" data-act="del">🗑</button></div></div>' +
-    '<p class="sec-sub" style="text-align:center;margin-top:18px">רוסית בכיס 1.0 · עובד בלי אינטרנט · כל הנתונים נשמרים רק במכשיר</p></div>';
+    '<p class="sec-sub" style="text-align:center;margin-top:18px">רוסית בכיס 1.1 · עובד בלי אינטרנט · כל הנתונים נשמרים רק במכשיר</p></div>';
   view(html, {
     tg: function (k) { s[k] = !s[k]; save(); render(); },
     goal: function (g) { p.goal = +g; save(); render(); },
@@ -32,7 +32,7 @@ SCREENS.settings = function () {
     backup: function () {
       modal('<h3>גיבוי ושחזור</h3><p>העתיקו את הטקסט ושמרו אותו (למשל בהודעה לעצמכם). כדי לשחזר, הדביקו כאן טקסט גיבוי ולחצו על "שחזור".</p><div class="field"><textarea id="bk" rows="6" style="direction:ltr;font-size:12px">' + esc(JSON.stringify(DB)) + '</textarea></div><div class="btnrow"><button class="btn sec" data-act="cp">📋 העתקה</button><button class="btn" data-act="rs">♻️ שחזור</button></div>',
         { cp: function () { var t = document.getElementById('bk'); t.select(); try { document.execCommand('copy'); toast('הועתק'); } catch (e) {} },
-          rs: function () { try { var d = JSON.parse(document.getElementById('bk').value); if (!d.profiles) throw 0; DB = d; save(); closeModal(); tab(P() ? 'home' : 'profiles'); toast('השחזור הצליח'); } catch (e) { toast('טקסט הגיבוי לא תקין'); } } });
+          rs: function () { try { var d = JSON.parse(document.getElementById('bk').value); if (!d.profiles) throw 0; DB = d; pruneProgress(); save(); closeModal(); tab(P() ? 'home' : 'profiles'); toast('השחזור הצליח'); } catch (e) { toast('טקסט הגיבוי לא תקין'); } } });
     },
     del: function () {
       modal('<h3>למחוק את ' + esc(p.name) + '?</h3><p>כל ההתקדמות של הפרופיל הזה תימחק לצמיתות.</p><div class="btnrow"><button class="btn sec" data-act="no">ביטול</button><button class="btn bad" data-act="yes">מחיקה</button></div>',

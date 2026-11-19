@@ -105,8 +105,9 @@ EX.build = {
 
 /* ---------- review / practice / dictionary / progress / settings ---------- */
 SCREENS.review = function () {
-  var p = P(), due = dueItems(), total = Object.keys(p.srs).length, t = todayStr();
-  var tomorrow = Object.keys(p.srs).filter(function (id) { return p.srs[id].d === addDays(t, 1); }).length;
+  var p = P(), due = dueItems(), srsIds = Object.keys(p.srs).filter(function (id) { return ITEM[id]; }), t = todayStr();
+  var total = srsIds.length;
+  var tomorrow = srsIds.filter(function (id) { return p.srs[id].d === addDays(t, 1); }).length;
   var html = '<div class="topbar"><h1>🔁 חזרה חכמה</h1></div><div class="wrap" style="padding-top:0">' +
     '<div class="card" style="text-align:center;padding:26px 16px"><div style="font-size:56px">' + (due.length ? '🧠' : '✅') + '</div><div style="font-size:40px;font-weight:900;color:var(--brand)">' + due.length + '</div><div style="color:var(--muted)">פריטים לחזרה היום</div>' +
     '<div style="margin-top:18px"><button class="btn" data-act="start" ' + (due.length ? '' : 'disabled') + '>' + (due.length ? 'להתחיל חזרה (' + Math.min(due.length, p.settings.reviewSize) + ')' : 'אין מה לחזור עליו כרגע') + '</button></div></div>' +
@@ -163,7 +164,8 @@ SCREENS.progress = function () {
   for (var i = 13; i >= 0; i--) { var d = addDays(t, -i); days.push({ d: d, xp: p.daily[d] || 0 }); }
   var max = Math.max(p.goal, Math.max.apply(null, days.map(function (x) { return x.xp; })));
   var ids = Object.keys(p.srs), words = ids.filter(function (id) { return ITEM[id] && ITEM[id].kind === 'word'; }), mastered = words.filter(function (id) { return p.srs[id].i >= 21; }).length;
-  var lessonsDone = Object.keys(p.done).length, totalLessons = 0; UNITS.forEach(function (u) { totalLessons += LESSONS[u.id].length; });
+  var lessonKeys = {}; UNITS.forEach(function (u) { LESSONS[u.id].forEach(function (l) { lessonKeys[l.key] = true; }); });
+  var lessonsDone = Object.keys(p.done).filter(function (k) { return lessonKeys[k]; }).length, totalLessons = Object.keys(lessonKeys).length;
   var acc = p.answered ? Math.round(p.correct * 100 / p.answered) : 0;
   var weak = words.filter(function (id) { return p.srs[id].l > 0; }).sort(function (a, b) { return p.srs[b].l - p.srs[a].l || p.srs[a].e - p.srs[b].e; }).slice(0, 8);
   var dn = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'];

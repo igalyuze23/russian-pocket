@@ -92,6 +92,16 @@ var DB;
 function load() {
   try { DB = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { DB = null; }
   if (!DB || !DB.profiles) DB = { profiles: [], current: null };
+  pruneProgress();
+}
+function pruneProgress() {
+  if (!DB || !DB.profiles) return;
+  var lessonKeys = {};
+  UNITS.forEach(function (u) { (LESSONS[u.id] || []).forEach(function (l) { lessonKeys[l.key] = true; }); });
+  DB.profiles.forEach(function (p) {
+    if (p.srs) Object.keys(p.srs).forEach(function (id) { if (!ITEM[id]) delete p.srs[id]; });
+    if (p.done) Object.keys(p.done).forEach(function (k) { if (!lessonKeys[k]) delete p.done[k]; });
+  });
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { toast('שגיאה בשמירה'); } }
 function P() { for (var i = 0; i < DB.profiles.length; i++) if (DB.profiles[i].id === DB.current) return DB.profiles[i]; return null; }
@@ -109,7 +119,7 @@ UNITS.forEach(function (u) {
   if (u.type === 'alphabet') u.letters.forEach(function (l) { ITEM[l.id] = { kind: 'letter', w: l, unit: u }; });
   if (u.type === 'grammar') u.quiz.forEach(function (q, i) { q.id = 'q:' + u.id + ':' + i; q.unit = u.id; ITEM[q.id] = { kind: 'q', w: q, unit: u }; });
   var ls = [];
-  if (u.type === 'vocab') chunk(u.words, 8).forEach(function (c, i) { ls.push({ key: u.id + ':' + i, title: 'שיעור ' + (i + 1), items: c }); });
+  if (u.type === 'vocab') chunk(u.words, u.lessonSize || 8).forEach(function (c, i) { ls.push({ key: u.id + ':' + i, title: 'שיעור ' + (i + 1), items: c }); });
   else if (u.type === 'alphabet') chunk(u.letters, 6).forEach(function (c, i) { ls.push({ key: u.id + ':' + i, title: 'שיעור ' + (i + 1), items: c }); });
   else ls.push({ key: u.id + ':0', title: u.type === 'grammar' ? 'תרגול דקדוק' : 'שאלות הבנה', items: [] });
   LESSONS[u.id] = ls;
@@ -756,8 +766,9 @@ EX.build = {
 
 /* ---------- review / practice / dictionary / progress / settings ---------- */
 SCREENS.review = function () {
-  var p = P(), due = dueItems(), total = Object.keys(p.srs).length, t = todayStr();
-  var tomorrow = Object.keys(p.srs).filter(function (id) { return p.srs[id].d === addDays(t, 1); }).length;
+  var p = P(), due = dueItems(), srsIds = Object.keys(p.srs).filter(function (id) { return ITEM[id]; }), t = todayStr();
+  var total = srsIds.length;
+  var tomorrow = srsIds.filter(function (id) { return p.srs[id].d === addDays(t, 1); }).length;
   var html = '<div class="topbar"><h1>🔁 חזרה חכמה</h1></div><div class="wrap" style="padding-top:0">' +
     '<div class="card" style="text-align:center;padding:26px 16px"><div style="font-size:56px">' + (due.length ? '🧠' : '✅') + '</div><div style="font-size:40px;font-weight:900;color:var(--brand)">' + due.length + '</div><div style="color:var(--muted)">פריטים לחזרה היום</div>' +
     '<div style="margin-top:18px"><button class="btn" data-act="start" ' + (due.length ? '' : 'disabled') + '>' + (due.length ? 'להתחיל חזרה (' + Math.min(due.length, p.settings.reviewSize) + ')' : 'אין מה לחזור עליו כרגע') + '</button></div></div>' +
@@ -814,7 +825,8 @@ SCREENS.progress = function () {
   for (var i = 13; i >= 0; i--) { var d = addDays(t, -i); days.push({ d: d, xp: p.daily[d] || 0 }); }
   var max = Math.max(p.goal, Math.max.apply(null, days.map(function (x) { return x.xp; })));
   var ids = Object.keys(p.srs), words = ids.filter(function (id) { return ITEM[id] && ITEM[id].kind === 'word'; }), mastered = words.filter(function (id) { return p.srs[id].i >= 21; }).length;
-  var lessonsDone = Object.keys(p.done).length, totalLessons = 0; UNITS.forEach(function (u) { totalLessons += LESSONS[u.id].length; });
+  var lessonKeys = {}; UNITS.forEach(function (u) { LESSONS[u.id].forEach(function (l) { lessonKeys[l.key] = true; }); });
+  var lessonsDone = Object.keys(p.done).filter(function (k) { return lessonKeys[k]; }).length, totalLessons = Object.keys(lessonKeys).length;
   var acc = p.answered ? Math.round(p.correct * 100 / p.answered) : 0;
   var weak = words.filter(function (id) { return p.srs[id].l > 0; }).sort(function (a, b) { return p.srs[b].l - p.srs[a].l || p.srs[a].e - p.srs[b].e; }).slice(0, 8);
   var dn = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'];
@@ -848,7 +860,7 @@ SCREENS.settings = function () {
     '<div class="sec-title">נתונים</div><div class="card"><div class="setrow"><div class="l"><b>גיבוי</b><small>העתקה או שחזור של כל הפרופילים כטקסט</small></div><button class="btn small sec" data-act="backup">💾 גיבוי</button></div>' +
     '<div class="setrow"><div class="l"><b>החלפת פרופיל</b></div><button class="btn small sec" data-act="switch">👥</button></div>' +
     '<div class="setrow"><div class="l"><b style="color:var(--bad)">מחיקת הפרופיל</b><small>מוחק את כל ההתקדמות של ' + esc(p.name) + '</small></div><button class="btn small bad" data-act="del">🗑</button></div></div>' +
-    '<p class="sec-sub" style="text-align:center;margin-top:18px">רוסית בכיס 1.0 · עובד בלי אינטרנט · כל הנתונים נשמרים רק במכשיר</p></div>';
+    '<p class="sec-sub" style="text-align:center;margin-top:18px">רוסית בכיס 1.1 · עובד בלי אינטרנט · כל הנתונים נשמרים רק במכשיר</p></div>';
   view(html, {
     tg: function (k) { s[k] = !s[k]; save(); render(); },
     goal: function (g) { p.goal = +g; save(); render(); },
@@ -864,7 +876,7 @@ SCREENS.settings = function () {
     backup: function () {
       modal('<h3>גיבוי ושחזור</h3><p>העתיקו את הטקסט ושמרו אותו (למשל בהודעה לעצמכם). כדי לשחזר, הדביקו כאן טקסט גיבוי ולחצו על "שחזור".</p><div class="field"><textarea id="bk" rows="6" style="direction:ltr;font-size:12px">' + esc(JSON.stringify(DB)) + '</textarea></div><div class="btnrow"><button class="btn sec" data-act="cp">📋 העתקה</button><button class="btn" data-act="rs">♻️ שחזור</button></div>',
         { cp: function () { var t = document.getElementById('bk'); t.select(); try { document.execCommand('copy'); toast('הועתק'); } catch (e) {} },
-          rs: function () { try { var d = JSON.parse(document.getElementById('bk').value); if (!d.profiles) throw 0; DB = d; save(); closeModal(); tab(P() ? 'home' : 'profiles'); toast('השחזור הצליח'); } catch (e) { toast('טקסט הגיבוי לא תקין'); } } });
+          rs: function () { try { var d = JSON.parse(document.getElementById('bk').value); if (!d.profiles) throw 0; DB = d; pruneProgress(); save(); closeModal(); tab(P() ? 'home' : 'profiles'); toast('השחזור הצליח'); } catch (e) { toast('טקסט הגיבוי לא תקין'); } } });
     },
     del: function () {
       modal('<h3>למחוק את ' + esc(p.name) + '?</h3><p>כל ההתקדמות של הפרופיל הזה תימחק לצמיתות.</p><div class="btnrow"><button class="btn sec" data-act="no">ביטול</button><button class="btn bad" data-act="yes">מחיקה</button></div>',

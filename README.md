@@ -2,7 +2,7 @@
 
 # רוסית בכיס
 
-**קורס רוסית חינמי לדוברי עברית, שעובד גם בלי אינטרנט.** 65 יחידות מרמת A0 עד C1, עם אוצר מילים, דקדוק, קריאה וחזרה חכמה. בלי הרשמה ובלי פרסומות.
+**קורס רוסית חינמי לדוברי עברית, שעובד גם בלי אינטרנט.** 70 יחידות מרמת A0 עד רוסית ליום-יום, עם אוצר מילים, דקדוק, קריאה וחזרה חכמה. בלי הרשמה ובלי פרסומות.
 
 📱 **אפליקציית אנדרואיד:** [הורדת APK](https://igalyuze23.github.io/russian-pocket/download/russian-pocket.apk)
 
@@ -16,8 +16,8 @@
 
 ## ✨ יכולות
 
-- **65 יחידות** מרמת מתחילים (A0) עד מתקדמים (B2–C1): אלפבית, אוצר מילים, דקדוק וקריאה.
-- **1,039 מילים**, עם סימון הטעמה ותעתיק לטיני.
+- **70 יחידות** מרמת מתחילים (A0) עד רוסית ליום-יום: אלפבית, אוצר מילים, דקדוק וקריאה.
+- **1,061 מילים**, עם סימון הטעמה ותעתיק לטיני.
 - **25 שיעורי דקדוק** בעברית, עם הסברים, דוגמאות ותרגול.
 - **קריאה:** דיאלוגים וטקסטים ספרותיים עם שאלות הבנה.
 - **חזרה חכמה (SRS)** לפי אלגוריתם SM-2, כדי לחזור על מה ששכחת בזמן הנכון.
@@ -68,7 +68,7 @@ KEYSTORE=/path/to/release.keystore KEYSTORE_PASS=... ./build.sh
 
 # Russian Pocket (רוסית בכיס)
 
-**A free Russian course for Hebrew speakers, including offline use.** It has 65 units from A0 to C1, with vocabulary, grammar, reading and spaced repetition. There is no sign-up and no ads.
+**A free Russian course for Hebrew speakers, including offline use.** It has 70 units from A0 to everyday Russian, with vocabulary, grammar, reading and spaced repetition. There is no sign-up and no ads.
 
 📱 **Android app:** [Download the APK](https://igalyuze23.github.io/russian-pocket/download/russian-pocket.apk)
 
@@ -76,8 +76,8 @@ KEYSTORE=/path/to/release.keystore KEYSTORE_PASS=... ./build.sh
 
 ## Features
 
-- **65 units** from beginner (A0) to advanced (B2–C1): alphabet, vocabulary, grammar and reading.
-- **1,039 words**, with stress marks and Latin transliteration.
+- **70 units** from beginner (A0) to everyday Russian: alphabet, vocabulary, grammar and reading.
+- **1,061 words**, with stress marks and Latin transliteration.
 - **25 grammar lessons** written in Hebrew, with explanations, examples and drills.
 - **Reading:** dialogues and literary texts with comprehension questions.
 - **Spaced repetition (SRS)** using the SM-2 algorithm, so you review what you've forgotten at the right time.

@@ -92,6 +92,16 @@ var DB;
 function load() {
   try { DB = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { DB = null; }
   if (!DB || !DB.profiles) DB = { profiles: [], current: null };
+  pruneProgress();
+}
+function pruneProgress() {
+  if (!DB || !DB.profiles) return;
+  var lessonKeys = {};
+  UNITS.forEach(function (u) { (LESSONS[u.id] || []).forEach(function (l) { lessonKeys[l.key] = true; }); });
+  DB.profiles.forEach(function (p) {
+    if (p.srs) Object.keys(p.srs).forEach(function (id) { if (!ITEM[id]) delete p.srs[id]; });
+    if (p.done) Object.keys(p.done).forEach(function (k) { if (!lessonKeys[k]) delete p.done[k]; });
+  });
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { toast('שגיאה בשמירה'); } }
 function P() { for (var i = 0; i < DB.profiles.length; i++) if (DB.profiles[i].id === DB.current) return DB.profiles[i]; return null; }
@@ -109,7 +119,7 @@ UNITS.forEach(function (u) {
   if (u.type === 'alphabet') u.letters.forEach(function (l) { ITEM[l.id] = { kind: 'letter', w: l, unit: u }; });
   if (u.type === 'grammar') u.quiz.forEach(function (q, i) { q.id = 'q:' + u.id + ':' + i; q.unit = u.id; ITEM[q.id] = { kind: 'q', w: q, unit: u }; });
   var ls = [];
-  if (u.type === 'vocab') chunk(u.words, 8).forEach(function (c, i) { ls.push({ key: u.id + ':' + i, title: 'שיעור ' + (i + 1), items: c }); });
+  if (u.type === 'vocab') chunk(u.words, u.lessonSize || 8).forEach(function (c, i) { ls.push({ key: u.id + ':' + i, title: 'שיעור ' + (i + 1), items: c }); });
   else if (u.type === 'alphabet') chunk(u.letters, 6).forEach(function (c, i) { ls.push({ key: u.id + ':' + i, title: 'שיעור ' + (i + 1), items: c }); });
   else ls.push({ key: u.id + ':0', title: u.type === 'grammar' ? 'תרגול דקדוק' : 'שאלות הבנה', items: [] });
   LESSONS[u.id] = ls;
